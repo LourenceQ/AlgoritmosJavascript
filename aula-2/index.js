@@ -1,13 +1,14 @@
-const { edGalho, edFolha } = require('./arrays');
+const listaLivros = require('./array');
 
-// console.log(edFolha);
-// console.log(edGalho);
+function mergeSort(array, nivelAninhamento = 0) {
 
-function mergeSort(array) {
-  if (array.length > 1) {
-    const meio = Math.florr(array.length / 2);
-    const parte1 = mergeSort(array.slice(0, meio));
-    const parte2 = mergeSort(array.slice(meio, array.length));
+  console.log(`nível de aninhamento: ${nivelAninhamento}`)
+  console.log(array)
+
+  if(array.length > 1) {
+    const meio = Math.floor(array.length / 2);
+    const parte1 = mergeSort(array.slice(0, meio), nivelAninhamento + 1);
+    const parte2 = mergeSort(array.slice(meio, array.length), nivelAninhamento + 1);
     array = ordena(parte1, parte2);
   }
 
@@ -15,28 +16,26 @@ function mergeSort(array) {
 }
 
 function ordena(parte1, parte2) {
-  let idx1 = 0;
-  let idx2 = 0;
-  const res = [];
+  let posicaoAtualParte1 = 0 
+  let posicaoAtualParte2 = 0
+  const resultado = []
 
-  while (idx1 < parte1.length && idx2 < parte2.length) {
-    let item1 = parte1[idx1];
-    let item2 = parte2[idx2];
+  while (posicaoAtualParte1 < parte1.length && posicaoAtualParte2 < parte2.length) {
+    let produtoAtualParte1 = parte1[posicaoAtualParte1]
+    let produtoAtualParte2 = parte2[posicaoAtualParte2]
 
-    if (item1.preco < item2.preco) {
-      res.push(item1);
-      item1++;
+    if (produtoAtualParte1.preco < produtoAtualParte2.preco) {
+      resultado.push(produtoAtualParte1)
+      posicaoAtualParte1++
     } else {
-        res.push(item2);
-        item2++;
+      resultado.push(produtoAtualParte2)
+      posicaoAtualParte2++
     }
   }
-console.log(item1);
-console.log(item2);
 
-  return res.concat(item1<part1.length 
-    ? parte1.slice(item1) 
-    : parte2.slice(item2));
+  return resultado.concat(posicaoAtualParte1 < parte1.length
+    ? parte1.slice(posicaoAtualParte1)
+    : parte2.slice(posicaoAtualParte2))
 }
 
-console.log(juntaListas(edGalho, edFolha))
+console.log(mergeSort(listaLivros));
